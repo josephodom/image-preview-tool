@@ -48,10 +48,16 @@
 							<dd>{{ fileSize(file.size) }}</dd>
 						</dl>
 						
-						<button type="reset" class="btn btn-danger" v-on:click="reset()">
-							&times;
-							Delete
-						</button>
+						<div>
+							<a v-if="file.data" :href="file.data" target="_blank" class="btn btn-primary">
+								View In New Tab
+							</a>
+							
+							<button type="reset" class="btn btn-danger" v-on:click="reset()">
+								&times;
+								Delete
+							</button>
+						</div>
 					</div>
 					
 					<div class="alert alert-danger" v-if="errorMessage">
