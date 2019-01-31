@@ -27,6 +27,68 @@ window.addEventListener('DOMContentLoaded', function(){
 	});
 });
 
+window.addEventListener('load', function(){
+	initializeApp();
+});
+
 function handleImage(image){
-	console.log(image);
+	window.app.reset();
+	
+	if([
+		'image/png',
+		'image/gif',
+		'image/jpeg',
+		'image/svg+xml',
+	].indexOf(image.type) == -1){
+		window.app.error('Not an image!');
+		
+		return;
+	}
+	
+	if(!window.app){
+		return;
+	}
+	
+	window.app.file.name = image.name;
+	window.app.file.size = image.size;
+	window.app.file.type = image.type;
+	
+	const fileReader = new FileReader();
+	
+	fileReader.onload = function(e){
+		window.app.file.data = e.target.result;
+		window.app.$forceUpdate();
+	};
+	
+	fileReader.readAsDataURL(image);
+}
+
+function initializeApp(){
+	window.app = new Vue({
+		el: '#main',
+		
+		data: {
+			errorMessage: '',
+			
+			file: {
+				name: false,
+				size: 0,
+				type: '',
+			},
+		},
+		
+		methods: {
+			error: function(errorMessage){
+				this.errorMessage = errorMessage;
+			},
+			
+			reset: function(){
+				this.errorMessage = '';
+				this.file.data = '';
+				this.file.name = false;
+				this.file.size = 0;
+				this.file.type = '';
+			},
+		},
+	});
 }

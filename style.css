@@ -23,6 +23,11 @@ header {
 	background-color: #FFF;
 }
 
+img {
+	border: 2px solid #CCC;
+	max-width: 100%;
+}
+
 main {
 	padding: 3em 0;
 	flex-grow: 1;
