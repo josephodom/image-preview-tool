@@ -1,29 +1,14 @@
 window.addEventListener('DOMContentLoaded', function(){
 	document.body.addEventListener('dragover', function(e){
 		e.preventDefault();
-		
 		e.stopPropagation();
 		
 		e.dataTransfer.dropEffect = 'copy';
-		
-		document.body.classList.add('dragover');
-	});
-	
-	document.body.addEventListener('dragexit', function(){
-		document.body.classList.remove('dragover');
 	});
 	
 	document.body.addEventListener('drop', function(e){
 		e.preventDefault();
 		e.stopPropagation();
-		
-		document.body.classList.remove('dragover');
-		
-		if(!e.dataTransfer.files || !e.dataTransfer.files[0]){
-			return;
-		}
-		
-		handleImage(e.dataTransfer.files[0]);
 	});
 });
 
@@ -68,6 +53,8 @@ function initializeApp(){
 		el: '#main',
 		
 		data: {
+			currentlyDragOver: false,
+			
 			errorMessage: '',
 			
 			file: {
@@ -78,6 +65,26 @@ function initializeApp(){
 		},
 		
 		methods: {
+			dragExit: function(){
+				this.currentlyDragOver = false;
+			},
+			
+			dragOver: function(){
+				this.currentlyDragOver = true;
+			},
+			
+			drop: function(e){
+				console.log(e);
+				
+				this.currentlyDragOver = false;
+				
+				if(!e.dataTransfer.files || !e.dataTransfer.files[0]){
+					return;
+				}
+				
+				handleImage(e.dataTransfer.files[0]);
+			},
+			
 			error: function(errorMessage){
 				this.errorMessage = errorMessage;
 			},
