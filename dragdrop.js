@@ -89,6 +89,24 @@ function initializeApp(){
 				this.errorMessage = errorMessage;
 			},
 			
+			fileSize: function(size){
+				const suffixes = [
+					'K',
+					'M',
+					'G',
+					'T',
+				];
+				
+				let denom = 0;
+				
+				while(size > 1024 && denom < suffixes.length - 1){
+					size /= 1024;
+					denom++;
+				}
+				
+				return `${Math.round(size * 10) / 10} ${suffixes[denom - 1] || ''}B`;
+			},
+			
 			reset: function(){
 				this.errorMessage = '';
 				this.file.data = '';

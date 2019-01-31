@@ -45,7 +45,7 @@
 							<dt>File Mimetype</dt>
 							<dd>{{ file.type }}</dd>
 							<dt>File Size</dt>
-							<dd>{{ file.size }}</dd>
+							<dd>{{ fileSize(file.size) }}</dd>
 						</dl>
 						
 						<button type="reset" class="btn btn-danger" v-on:click="reset()">
